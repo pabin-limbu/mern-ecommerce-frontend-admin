@@ -1,0 +1,10 @@
+.lblProductSpecName {
+  font-size: 12px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.txtProductSpecDetail {
+  font-size: 14px;
+  font-family: sans-serif;
+}
