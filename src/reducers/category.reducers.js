@@ -73,7 +73,6 @@ export default (state = initState, action) => {
         state.categories,
         catrgory
       );
-      console.log(updatedCategories);
       state = {
         ...state,
         categories: updatedCategories,
@@ -83,6 +82,18 @@ export default (state = initState, action) => {
     case categoryConstant.ADD_NEW_CATEGORY_FAILURE:
       state = { ...initState };
       break;
+    //UPDATE CASES
+    case categoryConstant.UPDATE_CATEGORY_REQUEST:
+      state = { ...state, loading: true };
+      break;
+
+    case categoryConstant.UPDATE_CATEGORY_SUCCESS:
+      state = { ...state, loading: false };
+      break;
+    case categoryConstant.UPDATE_CATEGORY_FAILURE:
+      state = { ...state, error: action.payload.error, loading: false };
+      break;
   }
+
   return state;
 };

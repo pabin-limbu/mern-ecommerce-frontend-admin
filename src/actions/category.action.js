@@ -1,12 +1,12 @@
-import axiousInstance from "../helpers/axios";
+import axiosInstance from "../helpers/axios";
 import { categoryConstant } from "./constants";
 
-export const getAllCategory = () => {
+const getAllCategory = () => {
   return async (dispatch) => {
     dispatch({ type: categoryConstant.GET_ALL_CATEGORY_REQUEST });
 
-    const res = await axiousInstance.get("/category/getcategory");
-    console.log(res);
+    const res = await axiosInstance.get("/category/getcategory");
+
     if (res.status === 200) {
       const { categoryList } = res.data;
       dispatch({
@@ -27,7 +27,7 @@ export const getAllCategory = () => {
 export const addCategory = (form) => {
   return async (dispatch) => {
     dispatch({ type: categoryConstant.ADD_NEW_CATEGORY_REQUEST });
-    const res = await axiousInstance.post("/category/create", form);
+    const res = await axiosInstance.post("/category/create", form);
     if (res.status === 201) {
       dispatch({
         type: categoryConstant.ADD_NEW_CATEGORY_SUCCESS,
@@ -39,6 +39,42 @@ export const addCategory = (form) => {
         payload: res.data.error,
       });
     }
-    console.log(res);
+   
   };
 };
+export const updateCategories = (form) => {
+  return async (dispatch) => {
+    const res = await axiosInstance.post("/category/update", form);
+    if (res.status === 201) {
+      dispatch(getAllCategory());
+      dispatch({ type: categoryConstant.UPDATE_CATEGORY_SUCCESS });
+    } else {
+      const { error } = res.data;
+      dispatch({
+        type: categoryConstant.UPDATE_CATEGORY_FAILURE,
+        payload: { error },
+      });
+    }
+  };
+};
+
+export const deleteCategory = (ids) => {
+  return async (dispatch) => {
+    dispatch({ type: categoryConstant.DELETE_CATEGORY_REQUEST });
+    const res = await axiosInstance.post("/category/delete", {
+      payload: { ids },
+    });
+    if (res.status == 201) {
+      dispatch({ type: categoryConstant.DELETE_CATEGORY_SUCCESS });
+      dispatch(getAllCategory());
+    } else {
+      const { error } = res.data;
+      dispatch({
+        type: categoryConstant.DELETE_CATEGORY_FAILURE,
+        payload: { error },
+      });
+    }
+  };
+};
+
+export { getAllCategory };

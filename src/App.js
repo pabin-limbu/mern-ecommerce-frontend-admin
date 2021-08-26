@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserLogedIn } from "./actions/auth.actions";
 import { getAllCategory } from "./actions/category.action";
 import { getInitialData } from "./actions";
+import NewPage from "./containers/NewPage";
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth); //fetch state.auth as state from store.
@@ -20,8 +21,10 @@ function App() {
     if (!auth.authenticate) {
       dispatch(isUserLogedIn());
     }
-    dispatch(getInitialData());
-  }, []);
+    if (auth.authenticate) {
+      dispatch(getInitialData());
+    }
+  }, [auth.authenticate]);
 
   return (
     <div className="App">
@@ -30,6 +33,7 @@ function App() {
         <PrivateRoute path="/products" component={Products} />
         <PrivateRoute path="/orders" component={Orders} />
         <PrivateRoute path="/category" component={Category} />
+        <PrivateRoute path="/page" component={NewPage} />
 
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../actions";
 import NewModal from "../../components/UI/modal/index";
 import "./style.css";
+import { generatePublicUrl } from "../../urlConfig";
 const Products = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
@@ -79,7 +80,7 @@ const Products = () => {
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
 
-                  <td>{product.category}</td>
+                  <td>{product.category.name}</td>
                 </tr>
               ))
             : null}
@@ -188,7 +189,9 @@ const Products = () => {
           </Col>
           <Col md="6">
             <label className={"lblProductSpecName"}>Category</label>
-            <p className={"txtProductSpecDetail"}>{productDetails.category}</p>
+            <p className={"txtProductSpecDetail"}>
+              {productDetails.category.name}
+            </p>
           </Col>
         </Row>
         <Row>
@@ -200,15 +203,16 @@ const Products = () => {
           </Col>
         </Row>
         <Row>
-          <Col md="12" style={{ display: "flex" }}>
-            {productDetails.productPictures.map((picture, index) => (
-              <div>
-                <img
-                  src={`http://localhost:2000/public/${picture.img}`}
-                  alt="img"
-                />
-              </div>
-            ))}
+          <Col md="12">
+            <label className={"lblProductSpecName"}>product picture</label>
+            <div style={{ display: "flex" }}>
+              {" "}
+              {productDetails.productPictures.map((picture, index) => (
+                <div className="productImgContainer">
+                  <img src={generatePublicUrl(picture.img)} alt="img" />
+                </div>
+              ))}
+            </div>
           </Col>
         </Row>
       </NewModal>

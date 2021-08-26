@@ -16,7 +16,7 @@ function Header() {
       <Nav className="ml-auto">
         {/* <Nav.Link href="#deets">Signin</Nav.Link> */}
         <li className="nav-item">
-          <span className="nav-link" onClick={logout}>
+          <span onClick={logout}>
             Signout
           </span>
         </li>
@@ -29,12 +29,12 @@ function Header() {
       <Nav className="ml-auto">
         {/* <Nav.Link href="#deets">Signin</Nav.Link> */}
         <li className="nav-item">
-          <NavLink to="/signin" className="nav-link">
+          <NavLink to="/signin" className="nav-item">
             Signin
           </NavLink>
         </li>
         <li className="nav-item">
-          <NavLink to="/signup" className="nav-link">
+          <NavLink to="/signup" className="nav-item">
             Signup
           </NavLink>
         </li>
